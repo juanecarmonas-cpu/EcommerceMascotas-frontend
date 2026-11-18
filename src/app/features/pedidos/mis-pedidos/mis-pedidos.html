@@ -1,0 +1,32 @@
+<h1 class="h3 mb-4">Mis pedidos</h1>
+
+@if (pedidos(); as lista) {
+  @if (lista.length === 0) {
+    <div class="alert alert-secondary">Todavía no tienes pedidos.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover align-middle bg-white">
+        <thead class="table-light">
+          <tr>
+            <th>Pedido</th>
+            <th>Estado</th>
+            <th class="text-end">Unidades</th>
+            <th class="text-end">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (pedido of lista; track pedido.pedidoId) {
+            <tr>
+              <td class="font-monospace small">{{ pedido.pedidoId | slice: 0 : 8 }}…</td>
+              <td><span class="badge text-bg-secondary">{{ pedido.estado }}</span></td>
+              <td class="text-end">{{ unidades(pedido) }}</td>
+              <td class="text-end">$ {{ pedido.montoTotal | number: '1.0-0' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+} @else {
+  <div class="text-center py-5"><div class="spinner-border text-success" role="status"></div></div>
+}

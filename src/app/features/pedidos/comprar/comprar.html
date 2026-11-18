@@ -1,0 +1,30 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-md-8 col-lg-6">
+    <a routerLink="/catalogo" class="btn btn-link px-0 mb-2">← Volver al catálogo</a>
+
+    @if (publicacion(); as p) {
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h1 class="h4">{{ p.nombreProducto }}</h1>
+          <p class="text-body-secondary">{{ p.descripcion }}</p>
+          <p class="fs-4 fw-bold text-success mb-1">$ {{ p.precio | number: '1.0-0' }}</p>
+          <p class="small text-body-secondary">{{ p.stock }} disponibles</p>
+
+          <form [formGroup]="formulario" (ngSubmit)="comprar()" novalidate>
+            <div class="mb-3">
+              <label for="cantidad" class="form-label">Cantidad</label>
+              <input id="cantidad" type="number" min="1" class="form-control" formControlName="cantidad"
+                     [class.is-invalid]="formulario.controls.cantidad.invalid && formulario.controls.cantidad.touched">
+              <div class="invalid-feedback">La cantidad debe ser de al menos 1.</div>
+            </div>
+            <button type="submit" class="btn btn-success w-100" [disabled]="enviando()">
+              {{ enviando() ? 'Comprando…' : 'Comprar' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    } @else {
+      <div class="text-center py-5"><div class="spinner-border text-success" role="status"></div></div>
+    }
+  </div>
+</div>
