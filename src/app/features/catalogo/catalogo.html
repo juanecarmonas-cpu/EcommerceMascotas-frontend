@@ -1,0 +1,43 @@
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+  <h1 class="h3 mb-0">Catálogo</h1>
+  <div class="d-flex flex-column flex-sm-row gap-2">
+    <input #caja type="search" class="form-control" placeholder="Buscar: collar, arena, snacks…"
+           [value]="texto()" (input)="escribir(caja.value)" aria-label="Buscar productos">
+    <select #filtro class="form-select" [value]="especie()" (change)="filtrarEspecie(filtro.value)"
+            aria-label="Filtrar por especie">
+      <option value="">Perros y gatos</option>
+      @for (e of especies; track e) {
+        <option [value]="e">{{ e === 'PERRO' ? 'Solo perros' : 'Solo gatos' }}</option>
+      }
+    </select>
+  </div>
+</div>
+
+@if (cargando()) {
+  <div class="text-center py-5"><div class="spinner-border text-success" role="status"></div></div>
+} @else if (error()) {
+  <div class="alert alert-danger">{{ error() }}</div>
+} @else if (resultado(); as pagina) {
+  @if (pagina.contenido.length === 0) {
+    <div class="alert alert-secondary text-center">No encontramos productos con esa búsqueda.</div>
+  } @else {
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+      @for (publicacion of pagina.contenido; track publicacion.id) {
+        <div class="col">
+          <app-tarjeta-publicacion [publicacion]="publicacion" />
+        </div>
+      }
+    </div>
+
+    <nav class="d-flex justify-content-center align-items-center gap-3 mt-4" aria-label="Paginación">
+      <button class="btn btn-outline-success" type="button" [disabled]="pagina.pagina === 0" (click)="anterior()">
+        Anterior
+      </button>
+      <span>Página {{ pagina.pagina + 1 }} de {{ pagina.totalPaginas }}</span>
+      <button class="btn btn-outline-success" type="button" [disabled]="pagina.pagina + 1 >= pagina.totalPaginas"
+              (click)="siguiente()">
+        Siguiente
+      </button>
+    </nav>
+  }
+}
