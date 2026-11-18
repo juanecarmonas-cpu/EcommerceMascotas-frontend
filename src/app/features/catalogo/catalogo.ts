@@ -5,19 +5,22 @@ import { catchError, debounceTime, distinctUntilChanged, of, switchMap, tap } fr
 
 import { mensajeDeError } from '../../core/models/error.models';
 import { ESPECIES } from '../../core/models/publicacion.models';
+import { AuthService } from '../../core/services/auth.service';
 import { PublicacionesService } from '../../core/services/publicaciones.service';
 import { TarjetaPublicacion } from '../../shared/tarjeta-publicacion/tarjeta-publicacion';
+import { Recomendados } from './recomendados/recomendados';
 
 /** Productos por pagina. La pagina la arma el backend, no Angular. */
 const TAMANO_PAGINA = 6;
 
 @Component({
   selector: 'app-catalogo',
-  imports: [TarjetaPublicacion],
+  imports: [TarjetaPublicacion, Recomendados],
   templateUrl: './catalogo.html',
 })
 export class Catalogo {
   private readonly publicaciones = inject(PublicacionesService);
+  protected readonly auth = inject(AuthService);
   protected readonly especies = ESPECIES;
 
   // Filtros como senales (signals): cuando cambia una, Angular sabe que tiene que volver a pedir la pagina.

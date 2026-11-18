@@ -27,6 +27,11 @@ export class PublicacionesService {
     return this.http.get<PublicacionResponse>(`${this.url}/${id}`);
   }
 
+  /** Funcionalidad propia: recomendados para la mascota del comprador del token. */
+  recomendadas(): Observable<PublicacionResponse[]> {
+    return this.http.get<PublicacionResponse[]>(`${this.url}/recomendadas`);
+  }
+
   crear(datos: CrearPublicacionRequest): Observable<PublicacionResponse> {
     return this.http.post<PublicacionResponse>(this.url, datos);
   }
