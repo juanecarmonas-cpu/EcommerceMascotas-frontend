@@ -1,0 +1,67 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8">
+    <h1 class="h3 mb-4">Publicar producto</h1>
+
+    <form class="card shadow-sm" [formGroup]="formulario" (ngSubmit)="publicar()" novalidate>
+      <div class="card-body p-4 row g-3">
+        <div class="col-12">
+          <label for="nombre" class="form-label">Nombre del producto</label>
+          <input id="nombre" class="form-control" formControlName="nombreProducto"
+                 [class.is-invalid]="invalido('nombreProducto')">
+          <div class="invalid-feedback">Escribe el nombre.</div>
+        </div>
+
+        <div class="col-12">
+          <label for="descripcion" class="form-label">Descripción</label>
+          <textarea id="descripcion" rows="3" class="form-control" formControlName="descripcion"
+                    [class.is-invalid]="invalido('descripcion')"></textarea>
+          <div class="invalid-feedback">La descripción es obligatoria y de máximo 500 caracteres.</div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="especie" class="form-label">Especie</label>
+          <select id="especie" class="form-select" formControlName="especieDestino"
+                  [class.is-invalid]="invalido('especieDestino')">
+            <option value="" disabled>Elige una</option>
+            @for (e of especies; track e) {
+              <option [value]="e">{{ e }}</option>
+            }
+          </select>
+          <div class="invalid-feedback">Elige perro o gato.</div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="categoria" class="form-label">Categoría</label>
+          <select id="categoria" class="form-select" formControlName="categoria"
+                  [class.is-invalid]="invalido('categoria')">
+            <option value="" disabled>Elige una</option>
+            @for (c of categorias; track c) {
+              <option [value]="c">{{ c }}</option>
+            }
+          </select>
+          <div class="invalid-feedback">Elige una categoría.</div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="precio" class="form-label">Precio (COP)</label>
+          <input id="precio" type="number" min="1" class="form-control" formControlName="montoPrecio"
+                 [class.is-invalid]="invalido('montoPrecio')">
+          <div class="invalid-feedback">El precio debe ser mayor a cero.</div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="stock" class="form-label">Unidades disponibles</label>
+          <input id="stock" type="number" min="1" class="form-control" formControlName="stockInicial"
+                 [class.is-invalid]="invalido('stockInicial')">
+          <div class="invalid-feedback">Debe haber al menos 1 unidad.</div>
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-success" [disabled]="enviando()">
+            {{ enviando() ? 'Publicando…' : 'Publicar' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
