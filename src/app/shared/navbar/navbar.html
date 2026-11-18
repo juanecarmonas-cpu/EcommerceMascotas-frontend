@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-success shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/catalogo">🐾 EcommerceMascotas</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu-principal"
+            aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menú">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menu-principal">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/catalogo" routerLinkActive="active">Catálogo</a>
+        </li>
+        @if (auth.esComprador()) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/mis-pedidos" routerLinkActive="active">Mis pedidos</a>
+          </li>
+        }
+        @if (auth.esVendedor()) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/publicar" routerLinkActive="active">Publicar producto</a>
+          </li>
+        }
+      </ul>
+
+      <div class="d-flex align-items-center gap-2">
+        @if (auth.haySesion()) {
+          <span class="navbar-text small">
+            {{ auth.email() }} <span class="badge text-bg-light">{{ auth.rol() }}</span>
+          </span>
+          <button class="btn btn-outline-light btn-sm" type="button" (click)="cerrarSesion()">Cerrar sesión</button>
+        } @else {
+          <a class="btn btn-light btn-sm" routerLink="/login">Iniciar sesión</a>
+        }
+      </div>
+    </div>
+  </div>
+</nav>
