@@ -1,0 +1,12 @@
+/* Estilos globales. Bootstrap se carga desde angular.json (styles y scripts). */
+body {
+  background-color: #f6f8f5;
+}
+
+.card {
+  transition: transform 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}

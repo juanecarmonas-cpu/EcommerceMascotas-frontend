@@ -1,0 +1,5 @@
+{
+  // La terminal de VS Code abre con Simbolo del sistema: asi "npm start" funciona aunque
+  // PowerShell tenga bloqueados los scripts .ps1.
+  "terminal.integrated.defaultProfile.windows": "Command Prompt"
+}
